@@ -4,6 +4,9 @@
 use Slim\Views\Twig;
 use Acme\Basket\Basket;
 use Acme\Models\Product;
+use Acme\Models\Address;
+use Acme\Models\Order;
+use Acme\Models\Customer;
 use Slim\Views\TwigExtension;
 use Acme\Support\Storage\SessionStorage;
 use Acme\Support\Storage\Contracts\StorageInterface;
@@ -37,6 +40,15 @@ return [
 	},
 	Product::class => function(ContainerInterface $c) {
 		return new Product;
+	},
+	Order::class => function(ContainerInterface $c) {
+		return new Order;
+	},
+	Customer::class => function(ContainerInterface $c) {
+		return new Customer;
+	},
+	Address::class => function(ContainerInterface $c) {
+		return new Address;
 	},
 	Basket::class => function(ContainerInterface $c) {
 		return new Basket(

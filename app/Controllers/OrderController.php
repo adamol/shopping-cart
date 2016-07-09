@@ -5,7 +5,9 @@ namespace Acme\Controllers;
 use Slim\Router;
 use Slim\Views\Twig;
 use Acme\Basket\Basket;
+use Acme\Models\Address;
 use Acme\Models\Product;
+use Acme\Models\Customer;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Acme\Validation\Contracts\ValidatorInterface;
@@ -34,7 +36,7 @@ class OrderController
 		return $view->render($response, 'order/index.twig');
 	}
 
-	public function create(Request $request, Response $response)
+	public function create(Request $request, Response $response, Customer $customer, Address $address)
 	{
 		$this->basket->refresh();
 
@@ -48,6 +50,41 @@ class OrderController
 			return $response->withRedirect($this->router->pathFor('order.index'));
 		}
 
-		die('create');
+		$hash = bin2hex(random_bytes(32));
+
+		$customer = $customer->firstOrCreate([
+			'email' => $request->getParam('email'),
+			'name' => $request->getParam('name'),
+		]);
+
+		$address = $address->firstOrCreate([
+			'address1' => $request->getParam('address1'),
+			'address2' => $request->getParam('address2'),
+			'city' => $request->getParam('city'),
+			'postal_code' => $request->getParam('postal_code'),
+		]);
+
+		$order = $customer->orders()->create([
+			'hash' => $hash,
+			'paid' => false,
+			'total' => $this->basket->total(),
+			'address_id' => $address->id,
+		]);
+
+		$order->products()->saveMany(
+			$this->basket->all(),
+			$this->getQuantities($this->basket->all())
+		);
+	}
+
+	protected function getQuantities($items)
+	{
+		$quantities = [];
+
+		foreach ($items as $item) {
+			$quantities[] = ['quantity' => $item->quantity];
+		}
+
+		return $quantities;
 	}
 }
