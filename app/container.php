@@ -2,6 +2,7 @@
 
 use Slim\Views\Twig;
 use Slim\Views\TwigExtension;
+use Acme\Models\Product;
 use Interop\Container\ContainerInterface;
 use function DI\get;
 
@@ -18,5 +19,8 @@ return [
 		));
 
 		return $twig;
-	}
+	},
+	Product::class => function(ContainerInterface $c) {
+		return new Product;
+	},
 ];
