@@ -32,7 +32,7 @@ class Basket
 			throw new QuantityExceededException;
 		}
 
-		if ($quantity === 0) {
+		if ($quantity == 0) {
 			$this->remove($product);
 			return;
 		}
@@ -100,6 +100,11 @@ class Basket
 		}
 
 		return $total;
+	}
+
+	public function total()
+	{
+		return $this->subTotal() + 4;
 	}
 
 	public function refresh()

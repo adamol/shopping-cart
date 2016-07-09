@@ -19,7 +19,11 @@
 								<tr>
 									<td><a href="{{ path_for('product.get', {slug: item.slug}) }}">{{ item.title }}</a></td>
 									<td>${{ item.price | number_format(2) }}</td>
-									<td>{{ item.quantity }} (temp)</td>
+									<td>
+
+										{% include 'cart/partials/quantity.twig' %}
+
+									</td>
 								</tr>
 							{% endfor %}
 						</tbody>
