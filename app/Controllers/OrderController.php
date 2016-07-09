@@ -89,8 +89,23 @@ class OrderController
 			]
 		]);
 
-		var_dump($result);
-		die();
+		$event = new \Acme\Events\OrderWasCreated($order, $this->basket);
+
+		if (1){//!$result->success) {
+			$event->attach(new \Acme\Handlers\RecordFailedPayment);
+			$event->dispatch();
+
+			return $response->withRedirect($this->router->pathFor('order.index'));
+		}
+
+		$event->attach([
+			new \Acme\Handlers\MarkOrderPaid,
+			new \Acme\Handlers\RecordSuccessfulPayment($result->transaction->id),
+			new \Acme\Handlers\UpdateStock,
+			new \Acme\Handlers\EmptyBasket,
+		]);
+
+		$event->dispatch();
 	}
 
 	protected function getQuantities($items)
