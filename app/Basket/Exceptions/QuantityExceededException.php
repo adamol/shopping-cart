@@ -1,6 +1,6 @@
 <?php
 
-namespace Acme\Basket\Exception;
+namespace Acme\Basket\Exceptions;
 
 use Exception;
 
