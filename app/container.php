@@ -5,6 +5,7 @@ use Slim\Views\Twig;
 use Acme\Basket\Basket;
 use Acme\Models\Product;
 use Acme\Models\Address;
+use Acme\Models\Payment;
 use Acme\Models\Order;
 use Acme\Models\Customer;
 use Slim\Views\TwigExtension;
@@ -49,6 +50,9 @@ return [
 	},
 	Address::class => function(ContainerInterface $c) {
 		return new Address;
+	},
+	Payment::class => function(ContainerInterface $c) {
+		return new Payment;
 	},
 	Basket::class => function(ContainerInterface $c) {
 		return new Basket(

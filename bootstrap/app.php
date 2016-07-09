@@ -27,6 +27,8 @@ $capsule->addConnection([
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
+include __DIR__ . '/../app/ignore/braintree.php';
+
 require __DIR__ . '/../app/routes.php';
 
 $app->add(new \Acme\Middleware\ValidationErrorsMiddleware($container->get(Twig::class)));

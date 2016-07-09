@@ -53,6 +53,10 @@ class ComposerStaticInit525dc914ab1234df0915c138dd33f3cb
         array (
             'Carbon\\' => 7,
         ),
+        'B' => 
+        array (
+            'Braintree\\' => 10,
+        ),
         'A' => 
         array (
             'Acme\\' => 5,
@@ -128,6 +132,10 @@ class ComposerStaticInit525dc914ab1234df0915c138dd33f3cb
         array (
             0 => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon',
         ),
+        'Braintree\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/braintree/braintree_php/lib/Braintree',
+        ),
         'Acme\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
@@ -154,6 +162,13 @@ class ComposerStaticInit525dc914ab1234df0915c138dd33f3cb
             'Doctrine\\Common\\Inflector\\' => 
             array (
                 0 => __DIR__ . '/..' . '/doctrine/inflector/lib',
+            ),
+        ),
+        'B' => 
+        array (
+            'Braintree' => 
+            array (
+                0 => __DIR__ . '/..' . '/braintree/braintree_php/lib',
             ),
         ),
     );

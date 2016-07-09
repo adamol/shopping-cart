@@ -78,7 +78,7 @@
 				<h3>Payment</h3>
 				<hr>
 
-				<div class="payment"></div>
+				<div id="payment"></div>
 			</div>
 			<div class="col-sm-4">
 				<div class="well">
@@ -95,5 +95,16 @@
 	</form>
 {% endblock %}
 {% block scripts %}
-
+	<script src="https://js.braintreegateway.com/js/braintree-2.26.0.min.js"></script>
+	<script>
+		$.ajax({
+			url: '{{ path_for('braintree.token') }}',
+			type: 'get',
+			dataType: 'json'
+		}).success(function(data) {
+			braintree.setup(data.token, "dropin", {
+			    container: "payment"
+			});
+		});
+	</script>
 {% endblock %}

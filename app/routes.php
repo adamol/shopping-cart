@@ -10,3 +10,5 @@ $app->post('/cart/update/{slug}', ['Acme\Controllers\CartController', 'update'])
 
 $app->get('/order', ['Acme\Controllers\OrderController', 'index'])->setName('order.index');
 $app->post('/order', ['Acme\Controllers\OrderController', 'create'])->setName('order.create');
+
+$app->get('/braintree/token', ['Acme\Controllers\BraintreeController', 'token'])->setName('braintree.token');
