@@ -13,6 +13,7 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Acme\Validation\Contracts\ValidatorInterface;
 use Acme\Validation\Forms\OrderForm;
 use Braintree_Transaction;
+use Acme\Models\Order;
 
 class OrderController
 {
@@ -35,6 +36,19 @@ class OrderController
 		}
 
 		return $view->render($response, 'order/index.twig');
+	}
+
+	public function show($hash, Request $request, Response $response, Twig $view, Order $order)
+	{
+		$order = $order->with(['address', 'products'])->where('hash', $hash)->first();
+
+		if (!$order) {
+			return $response->withRedirect($this->router->pathFor('home'));
+		}
+
+		return $view->render($response, 'order/show.twig', [
+			'order' => $order
+		]);
 	}
 
 	public function create(Request $request, Response $response, Customer $customer, Address $address)
@@ -91,7 +105,7 @@ class OrderController
 
 		$event = new \Acme\Events\OrderWasCreated($order, $this->basket);
 
-		if (1){//!$result->success) {
+		if (!$result->success) {
 			$event->attach(new \Acme\Handlers\RecordFailedPayment);
 			$event->dispatch();
 
@@ -106,6 +120,10 @@ class OrderController
 		]);
 
 		$event->dispatch();
+
+		return $response->withRedirect($this->router->pathFor('order.show', [
+			'hash' => $hash
+		]));
 	}
 
 	protected function getQuantities($items)

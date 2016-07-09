@@ -2,7 +2,7 @@
 
 namespace Acme\Models;
 
-use Acme\Modles\Order;
+use Acme\Models\Order;
 use Illuminate\Database\Eloquent\Model;
 
 class Address extends Model
