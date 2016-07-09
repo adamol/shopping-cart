@@ -8,10 +8,16 @@ use Slim\Views\TwigExtension;
 use Acme\Support\Storage\SessionStorage;
 use Acme\Support\Storage\Contracts\StorageInterface;
 use Interop\Container\ContainerInterface;
+use Acme\Validation\Contracts\ValidatorInterface;
+use Acme\Validation\Validator;
+
 use function DI\get;
 
 return [
 	'router' => get(Slim\Router::class),
+	ValidatorInterface::class => function(ContainerInterface $c) {
+		return new Validator;
+	},
 	StorageInterface::class => function(ContainerInterface $c) {
 		return new SessionStorage('cart');
 	},
