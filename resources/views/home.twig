@@ -4,7 +4,7 @@
 	<div class="row">
 		{% for index, product in products %}
 			<div class="col-md-4 col-sm-6">
-				{% include 'products/partials/product.twig' with {product: product} %}
+				{% include 'products/partials/item.twig' with {product: product} %}
 			</div>
 			{% if (index + 1) % 3 == 0 %}
 				</div>
